@@ -4,12 +4,7 @@
 import sys,os
 import urllib2
 from bs4 import BeautifulSoup
-from re import sub
-# from pymongo import MongoClient
-import time
 import sqlite3
-
-import pdb
 
 TABLE_NAME = 'stats'
 DB_NAME = os.path.dirname(os.path.realpath(__file__)) + '/walexa.db'
