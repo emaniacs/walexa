@@ -11,7 +11,7 @@ DB_NAME = os.path.dirname(os.path.realpath(__file__)) + '/walexa.db'
 
 def db_init():
     conn = sqlite3.connect(DB_NAME)
-    createTableIfNotExists(conn)
+    create_table(conn)
     return conn
 
 def do_save(params):
@@ -32,7 +32,7 @@ def do_show(url):
         print('\ton {} global rank is: {}, local rank: {}'.format(row[0], row[1], row[2]))
 
 
-def createTableIfNotExists(conn):
+def create_table(conn):
     sql = 'select name from sqlite_master where type="table" and name="%s"' % TABLE_NAME
     curr = conn.cursor()
     exists = curr.execute(sql)
@@ -43,7 +43,7 @@ def createTableIfNotExists(conn):
 
     return True
 
-def openLink(url):
+def open_link(url):
     _url = 'http://www.alexa.com/siteinfo/'+ url
     opener = urllib2.build_opener()
     opener.addheaders = [('User-agent', 'Mozilla/5.0 (X11; U; Linux i686) Gecko/20071127 Firefox/2.0.0.11')]
@@ -87,7 +87,7 @@ def get_engagement(soup):
     return data[0], data[1], data[2]
 
 def do_get(url):
-    html = openLink(url)
+    html = open_link(url)
     soup = BeautifulSoup(html)
     div = soup.findAll('div', {'class':'data'})
 
