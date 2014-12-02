@@ -89,15 +89,21 @@ def get_engagement(soup):
 def do_get(url):
     html = open_link(url)
     soup = BeautifulSoup(html)
-    div = soup.findAll('div', {'class':'data'})
+    
+    nodata = soup.find('section', {'id':'no-enough-data'})
+    if nodata is None:
+        div = soup.findAll('div', {'class':'data'})
 
-    countryRank = get_country_rank(soup)
-    globalRank = get_global_rank(soup)
+        countryRank = get_country_rank(soup)
+        globalRank = get_global_rank(soup)
 
-    bounceRate, pageView, dailyTime  = get_engagement(soup)
+        bounceRate, pageView, dailyTime  = get_engagement(soup)
 
-    return [url, countryRank, globalRank] + bounceRate + pageView + dailyTime
-
+        return [url, countryRank, globalRank] + bounceRate + pageView + dailyTime
+    
+    
+    print("No data found on alexa.com")
+    sys.exit()
 
 def help():
     print('{} <url>\n{} <command> <url>'.format(sys.argv[0], sys.argv[0]))
